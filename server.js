@@ -35,6 +35,18 @@ app.get("/artists", (req, res) => {
   });
 });
 
+app.get("/albums", (req, res) => {
+  models.Album.findAll({
+    attributes: [ "AlbumId", "Title" ],
+    include: {
+      model: models.Artist,
+      attributes: [ "Name" ]
+    }
+  }).then((albums) => {
+    res.send(albums);
+  });
+});
+
 app.get("/playlists", (req, res) => {
   models.Playlist.findAll().then((playlists) => {
     res.send(playlists);
